@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/appsec"
+    tools:context="com.macana.loshermanos.seminario.activity.Comandos">
+
+    <TabHost
+        android:id="@+id/TabHost"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:id="@+id/line"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/layout1"
+                    style="@style/Base.TextAppearance.AppCompat.Caption"
+                    layout="@layout/tab_seguridad"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></include>
+
+                <include
+                    android:id="@+id/layout2"
+                    style="@style/Base.TextAppearance.AppCompat"
+                    layout="@layout/tab_info"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></include>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btn_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                app:srcCompat="@drawable/home" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

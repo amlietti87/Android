@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.macana.loshermanos.seminario">
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- <uses-permission android:name="android.permission.WRITE_SMS" /> -->
+
+    <application
+        android:name=".activity.ApplicationClass"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_lodo_cb"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_lodo_cb"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- <receiver -->
+        <!-- android:name=".ReceiverSMS" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter android:priority="1000"> -->
+        <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+
+        <activity android:name=".activity.SendSMS" />
+        <activity android:name=".activity.Preferencias" />
+
+        <service android:name=".service.ReceiverService" />
+
+        <receiver android:name=".broadcastReceiver.RestartReceiverService">
+
+            <!-- Mayor prioridad. -->
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+
+            <!-- Reiniciar ante ReceiverService.OnDestroy -->
+            <intent-filter>
+                <action android:name="RestartOurReceiverService" />
+            </intent-filter>
+            <!-- Iniciar on boot -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".activity.ListaSalidas" />
+        <activity android:name=".activity.Comandos"></activity>
+    </application>
+
+</manifest>

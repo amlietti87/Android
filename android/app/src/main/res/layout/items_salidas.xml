@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/hidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/salnom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:text="hola" />
+
+
+    <Button
+        android:id="@+id/btnon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:background="@color/colorBtnOK"
+        android:text="Encender"
+
+        android:textColor="@color/colorBtnWhite" />
+
+    <Button
+        android:id="@+id/btnof"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Apagar"
+        android:background="@color/colorBtnCancel"
+        android:textColor="@color/colorBtnWhite"/>
+
+
+</LinearLayout>
