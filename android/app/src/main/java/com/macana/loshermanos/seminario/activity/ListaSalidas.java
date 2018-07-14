@@ -93,7 +93,7 @@ public class ListaSalidas extends AppCompatActivity {
             viewHolder.id.setText(sal.getSalidasId());
             viewHolder.salida = (TextView) convertView.findViewById(R.id.salnom);
             viewHolder.salida.setText(sal.getSalidasNombre());
-            viewHolder.btnOn = (Button) convertView.findViewById(R.id.btnon);
+            viewHolder.btnOn = (ImageButton) convertView.findViewById(R.id.btnon);
             viewHolder.btnOn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -101,7 +101,7 @@ public class ListaSalidas extends AppCompatActivity {
                     SendSMS.SendSMS(getContext(),CelularDeAlarma, "on S0"+viewHolder.id.getText());
                 }
             });
-            viewHolder.btnOff = (Button) convertView.findViewById(R.id.btnof);
+            viewHolder.btnOff = (ImageButton) convertView.findViewById(R.id.btnof);
             viewHolder.btnOff.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -116,8 +116,8 @@ public class ListaSalidas extends AppCompatActivity {
     public class viewHolder {
         TextView id;
         TextView salida;
-        Button btnOn;
-        Button btnOff;
+        ImageButton btnOn;
+        ImageButton btnOff;
     }
 
     // Buscar datos en la BD, armar un objeto salidas para luego mostrarlo en la lista.

@@ -5,6 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorBtnOK">#99276337</color>
     <color name="colorBtnWarning">#99f4b942</color>
-    <color name="colorBtnWhite">#FFFFFFFF</color>
+    <color name="colorBtnWhite">#ffffff</color>
     <color name="colorBtnCancel">#99FF0000</color>
 </resources>
