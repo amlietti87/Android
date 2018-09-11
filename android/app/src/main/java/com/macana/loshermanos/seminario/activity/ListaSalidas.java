@@ -42,18 +42,7 @@ public class ListaSalidas extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.lvsalidas);
         readData();
         listView.setAdapter(new MyListAdapter(this, R.layout.items_salidas, SalidasNombre));
-        ImageButton btnActSal = (ImageButton) findViewById(R.id.btn_actualizar);
         ImageButton btnHome = (ImageButton) findViewById(R.id.btn_home);
-
-        // Boton actualizar salidas. Envia SMS pidiendo las salidas habilitadas.
-        btnActSal.setOnClickListener(new View.OnClickListener() {
-            SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-            final String CelularDeAlarma = prefs.getString("CelularAlarma","12345");
-            @Override
-            public void onClick(View view) {
-                SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Salidas");
-            }
-        });
 
         // Boton Home, vuelve al main activity.
         btnHome.setOnClickListener(new View.OnClickListener() {

@@ -31,20 +31,11 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/btn_actualizar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:background="@null"
-                app:srcCompat="@drawable/synchronize" />
-
-            <ImageButton
                 android:id="@+id/btn_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
                 android:background="@null"
                 app:srcCompat="@drawable/home" />
         </RelativeLayout>

@@ -23,6 +23,8 @@ import com.macana.loshermanos.seminario.activity.ListaSalidas;
 import com.macana.loshermanos.seminario.data.CBContract;
 import com.macana.loshermanos.seminario.data.DBHelper;
 
+import java.util.ArrayList;
+
 /**
  * Created by andreslietti on 9/16/17.
  */
@@ -31,6 +33,8 @@ public class ReceiverSMS extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 0;
     final SmsManager sms = SmsManager.getDefault();
     private Context context;
+
+
 
 
     public ReceiverSMS() {
@@ -44,6 +48,9 @@ public class ReceiverSMS extends BroadcastReceiver {
         SQLiteDatabase db = app.getReadableDB();
         String Mensajes = null;
         String Remitente = null;
+        ArrayList<String> Activaciones = new ArrayList<>();
+        // Declaracion de preferencia.
+        final SharedPreferences act = context.getSharedPreferences("Activacion", Context.MODE_PRIVATE);
 
         final Bundle bundle = intent.getExtras();
         if(bundle!=null) {
@@ -169,6 +176,22 @@ public class ReceiverSMS extends BroadcastReceiver {
                                     db.close();
                                     break;
                                 }
+                             // Activaciones, tomo los distintos nombres de las distintas activaciones.
+                            case '1':
+                                String[] activaciones = Mensajes.split(",");
+                                    for (int j = 0; j < 4; j++){
+                                        String nombres = activaciones[j].substring(2);
+                                        Activaciones.add(nombres);
+                                    }
+                                Activaciones.add("Reactivar");
+                                Activaciones.add("Desactivar");
+                                SharedPreferences.Editor  editor = act.edit();
+                                editor.putInt("Activacion_size", Activaciones.size());
+                                for (i = 0; i < Activaciones.size(); i++){
+                                        editor.putString("Activacion_" + i, Activaciones.get(i).toString());
+                                }
+                                editor.apply();
+                                break;
 
                             default:
                                 // Tomo la segunda palabra del mensaje y comparo si es mensaje de estado, mensaje de activacion de la alarma o mensaje de activacion/desactivacion de la alarma.
@@ -248,7 +271,7 @@ public class ReceiverSMS extends BroadcastReceiver {
                     */
             }
         }
-    }
 
+    }
 
 }

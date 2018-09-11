@@ -17,16 +17,22 @@ import android.widget.Toast;
 import com.macana.loshermanos.seminario.MainActivity;
 import com.macana.loshermanos.seminario.R;
 
+import java.util.ArrayList;
+
 public class Comandos extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter;
     private ListView list_info;
     private ListView list_security;
+    private ArrayList<String>Activaciones = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comandos);
+
+        //Recupero el array de activaciones.
+        loadArray();
 
         // Recupero el numero de alarma seteado en las preferencias.
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
@@ -48,8 +54,8 @@ public class Comandos extends AppCompatActivity {
         tab.addTab(spec2);
 
         list_security = (ListView) findViewById(R.id.list_seguridad);
-        final String[] seguridad = new String[] {"Activar","Desactivar","Reactivar"};
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, seguridad);
+        //final String[] seguridad = new String[] {"Activar","Desactivar","Reactivar"};
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Activaciones);
         list_security.setAdapter(adapter);
 
         list_info = (ListView) findViewById(R.id.list_info);
@@ -62,13 +68,22 @@ public class Comandos extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,seguridad[0].toString());
+                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 1");
                         break;
                     case 1:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,seguridad[1].toString());
+                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 2");
                         break;
                     case 2:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,seguridad[1].toString());
+                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 3");
+                        break;
+                    case 3:
+                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 4");
+                        break;
+                    case 4:
+                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 1");
+                        break;
+                    case 5:
+                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Desactivar");
                         break;
                 }
             }
@@ -98,6 +113,15 @@ public class Comandos extends AppCompatActivity {
                 startActivity(actionIntent);
             }
         });
+
+    }
+
+    public void loadArray(){
+        SharedPreferences act = getApplicationContext().getSharedPreferences("Activacion", Context.MODE_PRIVATE);
+        int size = act.getInt("Activacion_size", 0);
+        for (int i = 0; i < size; i++){
+            Activaciones.add(act.getString("Activacion_"+i, null));
+        }
 
     }
 }

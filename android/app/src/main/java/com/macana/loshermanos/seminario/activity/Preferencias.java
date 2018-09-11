@@ -25,6 +25,8 @@ public class Preferencias extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferencias);
+        ImageButton btnActSal = (ImageButton) findViewById(R.id.btn_actualizar);
+        ImageButton btnActAct = (ImageButton) findViewById(R.id.btn_activaciones);
 
         // Declaracion de preferencia.
         final SharedPreferences prefs = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
@@ -52,6 +54,26 @@ public class Preferencias extends AppCompatActivity {
                 editor.putString("CelularAlarma", numeroAsetear);
                 editor.apply();
                 Toast.makeText(getApplication().getApplicationContext(), "Guardando Preferencias "+numeroAsetear, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Actualizar las Salidas.
+        btnActSal.setOnClickListener(new View.OnClickListener() {
+            SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+            final String CelularDeAlarma = prefs.getString("CelularAlarma","12345");
+            @Override
+            public void onClick(View view) {
+                SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Salidas");
+            }
+        });
+
+        // Actualizar las Activaciones.
+        btnActAct.setOnClickListener(new View.OnClickListener() {
+            SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+            final String CelularDeAlarma = prefs.getString("CelularAlarma","12345");
+            @Override
+            public void onClick(View view) {
+                SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"alarmas");
             }
         });
 
