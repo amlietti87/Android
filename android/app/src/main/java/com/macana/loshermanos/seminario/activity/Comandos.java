@@ -6,37 +6,42 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.macana.loshermanos.seminario.MainActivity;
 import com.macana.loshermanos.seminario.R;
+import com.macana.loshermanos.seminario.data.Activaciones;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Comandos extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter;
     private ListView list_info;
     private ListView list_security;
-    private ArrayList<String>Activaciones = new ArrayList<>();
+    private ArrayList<Activaciones>Activaciones = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comandos);
 
-        //Recupero el array de activaciones.
-        loadArray();
-
         // Recupero el numero de alarma seteado en las preferencias.
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
         final String CelularDeAlarma = prefs.getString("CelularAlarma","12345");
+
+        //Recupero el array de activaciones.
+        loadArray();
 
         // Armado y completado de los tabs.
         TabHost tab = (TabHost) findViewById(R.id.TabHost);
@@ -54,40 +59,14 @@ public class Comandos extends AppCompatActivity {
         tab.addTab(spec2);
 
         list_security = (ListView) findViewById(R.id.list_seguridad);
-        //final String[] seguridad = new String[] {"Activar","Desactivar","Reactivar"};
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Activaciones);
-        list_security.setAdapter(adapter);
+        list_security.setAdapter(new MyListAdapter(this, R.layout.items_activaciones, Activaciones));
+
 
         list_info = (ListView) findViewById(R.id.list_info);
         final String[] info = new String[] {"Estado","Saldo"};
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, info);
         list_info.setAdapter(adapter);
 
-        list_security.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                switch (position){
-                    case 0:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 1");
-                        break;
-                    case 1:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 2");
-                        break;
-                    case 2:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 3");
-                        break;
-                    case 3:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 4");
-                        break;
-                    case 4:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Activar 1");
-                        break;
-                    case 5:
-                        SendSMS.SendSMS(getApplicationContext(),CelularDeAlarma,"Desactivar");
-                        break;
-                }
-            }
-        });
 
         list_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,11 +95,72 @@ public class Comandos extends AppCompatActivity {
 
     }
 
+    // Armado del contenedor de la lista dinamica de activaciones.
+
+    private class MyListAdapter extends ArrayAdapter<Activaciones>
+    {
+        private int layout;
+        private MyListAdapter(Context context, int resource, List<Activaciones> objects){
+            super(context, resource, objects);
+            layout = resource;
+        }
+
+        public View getView(int pos, View convertView, ViewGroup parent) {
+            if(convertView == null){
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                convertView = inflater.inflate(layout, parent, false);
+            }
+
+            Context context = getApplicationContext();
+            SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+            final String CelularDeAlarma = prefs.getString("CelularAlarma","12345");
+            final viewHolder viewHolder = new viewHolder();
+            Activaciones act = Activaciones.get(pos);
+            viewHolder.id = (TextView)convertView.findViewById(R.id.id_hidden);
+            viewHolder.id.setText(act.getActivacionesId());
+            final int position = Integer.parseInt(String.valueOf(viewHolder.id.getText()));
+            viewHolder.actnom = (TextView)convertView.findViewById(R.id.actnom);
+            viewHolder.actnom.setText(act.getActivacionesId());
+            viewHolder.btnact = (ImageButton)convertView.findViewById(R.id.btn_act);
+            viewHolder.btnact.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position == 5){
+                        SendSMS.SendSMS(getContext(),CelularDeAlarma,"reactivar");
+                    }
+                    SendSMS.SendSMS(getContext(),CelularDeAlarma, "activar " + viewHolder.id.getText());
+                }
+            });
+            viewHolder.btndsact = (ImageButton)convertView.findViewById(R.id.btn_dsact);
+            viewHolder.btndsact.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SendSMS.SendSMS(getContext(), CelularDeAlarma, "desactivar");
+                }
+            });
+            return convertView;
+        }
+    }
+
+    public class viewHolder {
+        TextView id;
+        TextView actnom;
+        ImageButton btnact;
+        ImageButton btndsact;
+    }
+
     public void loadArray(){
         SharedPreferences act = getApplicationContext().getSharedPreferences("Activacion", Context.MODE_PRIVATE);
         int size = act.getInt("Activacion_size", 0);
+        String Id = "";
+        String Nom = "";
         for (int i = 0; i < size; i++){
-            Activaciones.add(act.getString("Activacion_"+i, null));
+            Id = Integer.toString(i+1);
+            Nom = act.getString("Activacion_"+i, null);
+            Activaciones activaciones = new Activaciones (Id, Nom);
+            Activaciones.add(activaciones);
+            Id = "";
+            Nom = "";
         }
 
     }

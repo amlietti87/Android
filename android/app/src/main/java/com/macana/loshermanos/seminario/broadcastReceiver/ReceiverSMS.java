@@ -184,7 +184,6 @@ public class ReceiverSMS extends BroadcastReceiver {
                                         Activaciones.add(nombres);
                                     }
                                 Activaciones.add("Reactivar");
-                                Activaciones.add("Desactivar");
                                 SharedPreferences.Editor  editor = act.edit();
                                 editor.putInt("Activacion_size", Activaciones.size());
                                 for (i = 0; i < Activaciones.size(); i++){
