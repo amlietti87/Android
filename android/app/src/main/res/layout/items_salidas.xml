@@ -16,7 +16,8 @@
         android:layout_height="40dp"
         android:layout_weight="4"
         android:gravity="center"
-        android:text="hola" />
+        android:text="hola"
+        android:textStyle="bold"/>
 
     <ImageButton
         android:id="@+id/btnon"

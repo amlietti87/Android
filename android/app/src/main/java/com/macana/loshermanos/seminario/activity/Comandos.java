@@ -118,17 +118,19 @@ public class Comandos extends AppCompatActivity {
             Activaciones act = Activaciones.get(pos);
             viewHolder.id = (TextView)convertView.findViewById(R.id.id_hidden);
             viewHolder.id.setText(act.getActivacionesId());
-            final int position = Integer.parseInt(String.valueOf(viewHolder.id.getText()));
             viewHolder.actnom = (TextView)convertView.findViewById(R.id.actnom);
-            viewHolder.actnom.setText(act.getActivacionesId());
+            viewHolder.actnom.setText(act.getActivacionNom());
             viewHolder.btnact = (ImageButton)convertView.findViewById(R.id.btn_act);
             viewHolder.btnact.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (position == 5){
+                    if (Integer.parseInt(String.valueOf(viewHolder.id.getText())) == 5){
                         SendSMS.SendSMS(getContext(),CelularDeAlarma,"reactivar");
                     }
-                    SendSMS.SendSMS(getContext(),CelularDeAlarma, "activar " + viewHolder.id.getText());
+                    else {
+                        SendSMS.SendSMS(getContext(),CelularDeAlarma, "activar " + viewHolder.id.getText());
+                    }
+
                 }
             });
             viewHolder.btndsact = (ImageButton)convertView.findViewById(R.id.btn_dsact);

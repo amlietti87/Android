@@ -16,7 +16,8 @@
         android:layout_height="40dp"
         android:layout_weight="4"
         android:text="Activacion"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textStyle="bold"/>
 
     <ImageButton
         android:id="@+id/btn_act"
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/activar" />
+        app:srcCompat="@drawable/activar_2" />
 
     <ImageButton
         android:id="@+id/btn_dsact"
